@@ -11,13 +11,66 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-interactions": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/manager-webpack5": "^6.5.13",
+    "@storybook/node-logger": "^6.5.13",
+    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^6.5.13",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-plugin-named-exports-order": "^0.0.2",
+    "css-loader": "5.2.6",
+    "del-cli": "^5.0.0",
+    "flexboxgrid": "^6.3.1",
+    "imagemin-cli": "^7.0.0",
+    "node-sass": "^7.0.3",
+    "npm-watch": "^0.11.0",
+    "prop-types": "^15.8.1",
+    "sass": "^1.55.0",
+    "sass-loader": "10.1.1",
+    "style-dictionary": "^3.7.1",
+    "style-loader": "2.0.0",
+    "token-transformer": "^0.0.27",
+    "webpack": "^5.74.0"
+  },
+  "watch": {
+    "tokenbuild": {
+      "patterns": [
+        "tokens"
+      ],
+      "extensions": "json"
+    },
+    "sass:compile": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "scss"
+    },
+    "imagemin": {
+      "patterns": [
+        "src/images"
+      ],
+      "extensions": "png,jpg,jpeg,svg,gif,webp"
+    }
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "storybook": "start-storybook -p 6006 -s ./public",
+    "build-storybook": "build-storybook -s public",
+    "imgclean": "del build/images/*",
+    "watch": "npm-watch",
+    "buildassets": "npm run tokenbuild && npm run imagemin",
+    "sass:compile": "node-sass --output-style compressed src/scss/main.scss build/css/main.css",
+    "imagemin": "npm run imgclean && imagemin src/images/* --out-dir=build/images",
+    "tokenbuild": "node node_modules/token-transformer tokens/tokens.json token-convert/converted.json Default excludes tokenSetOrder --expandTypography=true --expandShadow=true --resolveReferences=false && style-dictionary build && npm run sass:compile"
   },
   "eslintConfig": {
     "extends": [
@@ -46,20 +99,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@storybook/addon-actions": "^6.5.13",
-    "@storybook/addon-essentials": "^6.5.13",
-    "@storybook/addon-interactions": "^6.5.13",
-    "@storybook/addon-links": "^6.5.13",
-    "@storybook/builder-webpack5": "^6.5.13",
-    "@storybook/manager-webpack5": "^6.5.13",
-    "@storybook/node-logger": "^6.5.13",
-    "@storybook/preset-create-react-app": "^4.1.2",
-    "@storybook/react": "^6.5.13",
-    "@storybook/testing-library": "^0.0.13",
-    "babel-plugin-named-exports-order": "^0.0.2",
-    "prop-types": "^15.8.1",
-    "webpack": "^5.74.0"
   }
 }

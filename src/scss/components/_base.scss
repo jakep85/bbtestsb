@@ -1,0 +1,55 @@
+html {
+  box-sizing: border-box;
+  font-size: 12px;
+  // Font fallback, for multi client framework can be setup in "_webfont.scss"
+  font-family: Arial, Helvetica, sans-serif;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: $color-neutral-next-100;
+}
+
+img {
+  max-height: 100%;
+}
+
+// Test page layout - manual stuff
+.bb-container {
+  padding: 2vw 2vw 10vw;
+
+  @include sm {
+    padding: 5vw 5vw 10vw;
+  }
+}
+
+h1,
+h2,
+p {
+  font-family: 'Codec Pro';
+  color: $color-global-blue-accent-500;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 36px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 20px;
+  margin-top: 50px;
+}
+
+p {
+  font-size: 16px;
+}

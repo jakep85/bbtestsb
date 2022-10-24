@@ -1,0 +1,25 @@
+// Font Weights
+$weight-regular: 400;
+$weight-bold: 500;
+
+$weights: (
+  regular: $weight-regular,
+  bold: $weight-bold,
+);
+
+// Filepath and name
+$font-path: '/build/fonts/';
+$font-filename: 'codec-pro';
+$font-family-name: 'Codec Pro';
+
+@each $name, $weight in $weights {
+  @font-face {
+    font-family: $font-family-name;
+    src: url($font-path + $font-filename + '-' + $name + '.woff2') format('woff2'),
+      url($font-path + $font-filename + '-' + $name + '.woff') format('woff'),
+      url($font-path + $font-filename + '-' + $name + '.ttf') format('truetype');
+    font-style: normal;
+    font-weight: $weight;
+    font-display: swap;
+  }
+}

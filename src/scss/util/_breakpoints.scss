@@ -1,0 +1,111 @@
+// Media queries inspired from Bootstrap 5
+// https://getbootstrap.com/docs/5.0/layout/breakpoints/
+// -------------------------------------------------------------------------
+
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+// Media query up (default)
+// -------------------------------------------------------------------------
+
+// Small devices (landscape phones, 576px and above)
+@mixin sm {
+  @media only screen and (min-width: #{$sm}) {
+    @content;
+  }
+}
+// Medium devices (tablets, 768px and above)
+@mixin md {
+  @media only screen and (min-width: #{$md}) {
+    @content;
+  }
+}
+// Large devices (desktops, 992px and above)
+@mixin lg {
+  @media only screen and (min-width: #{$lg}) {
+    @content;
+  }
+}
+// Extra large devices (large desktops, 1200px and above)
+@mixin xl {
+  @media only screen and (min-width: #{$xl}) {
+    @content;
+  }
+}
+// Extra extra large devices (large widescreen desktops, 1600px and above)
+@mixin xxl {
+  @media only screen and (min-width: #{$xxl}) {
+    @content;
+  }
+}
+
+// Media query down (avoid if possible - use "mobile" first approach with above MQ's)
+// -------------------------------------------------------------------------
+
+// Small devices (landscape phones, 576px and below)
+@mixin sm-down {
+  @media only screen and (max-width: #{$sm - 0.02px}) {
+    @content;
+  }
+}
+// Medium devices (tablets, 768px and below)
+@mixin md-down {
+  @media only screen and (max-width: #{$md - 0.02px}) {
+    @content;
+  }
+}
+// Large devices (desktops, 992px and below)
+@mixin lg-down {
+  @media only screen and (max-width: #{$lg - 0.02px}) {
+    @content;
+  }
+}
+// Extra large devices (large desktops, 1200px and below)
+@mixin xl-down {
+  @media only screen and (max-width: #{$xl - 0.02px}) {
+    @content;
+  }
+}
+// Extra extra large devices (large widescreen desktops, 1600px and below)
+@mixin xxl-down {
+  @media only screen and (max-width: #{$xxl - 0.02px}) {
+    @content;
+  }
+}
+
+// Media query only "window" type (avoid if possible - use "mobile" first approach)
+// -------------------------------------------------------------------------
+
+// Small devices (portrait or landscape phones only, between 0px and 576px)
+@mixin sm-only {
+  @media only screen and (max-width: #{$sm - 0.02px}) {
+    @content;
+  }
+}
+// Medium devices (tablets only, between 576px and 768px)
+@mixin md-only {
+  @media only screen and (min-width: #{$sm}) and (max-width: #{$md - 0.02px}) {
+    @content;
+  }
+}
+// Large devices (desktops, only between 768px and 992px)
+@mixin lg-only {
+  @media only screen and (min-width: #{$md}) and (max-width: #{$lg - 0.02px}) {
+    @content;
+  }
+}
+// Extra large devices (large desktops only, between 992px and 1200px)
+@mixin xl-only {
+  @media only screen and (min-width: #{$lg}) and (max-width: #{$xl - 0.02px}) {
+    @content;
+  }
+}
+// Extra extra large devices (large widescreen desktops only, between 1200px and 1600px)
+@mixin xxl-only {
+  @media only screen and (min-width: #{$xl}) and (max-width: #{$xxl - 0.02px}) {
+    @content;
+  }
+}

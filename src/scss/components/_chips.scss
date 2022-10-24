@@ -1,0 +1,119 @@
+// Build all chip classes
+// $chips: (
+//   (
+//     color: 'blue' (
+//       type: 'default' (
+//         text-color: #000,
+//         background-color: #000,
+//         border-color: #000
+//       ),
+//       type: 'subtle' (
+//         text-color: #000,
+//         background-color: #000,
+//         border-color: #000
+//       )
+//     )
+//   )
+// );
+// @mixin chip($color, $size, $type) {
+//   .bb-chip-#{$color}-#{$size}-#{$type} {
+// if color and type
+// --> do all sizes
+//   }
+// }
+// Could also have another mixin than adds chip style to <button> - strips default look then apply it. Or <a> link.
+
+// Another approach the "bootstrap" having additive classes to create eg. <button class="button lg blue default">
+// I generally like to namespace everything hence the "bb-" as above classnames could be used by other vendors
+
+// Just manually making chips used in the challenge
+@mixin base-lg-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2 * $space-scale-20;
+  border-radius: $border-radius-pill;
+  padding: $space-scale-8 $space-scale-20;
+  // Adding transparent border so that if there is a hover effect with border is no button movement
+  border: 1px solid transparent;
+  @include font(label-lg-bold);
+
+  // Couldn't see any visual hover effect in the component library, design tokens, or specs
+  // TODO: talk to UX about hover and keyboard focus (ring) states
+  &:hover,
+  &:focus {
+    cursor: pointer;
+  }
+
+  // adjust padding if contains icons
+  &.contains-icon-left {
+    padding-left: $space-scale-8;
+  }
+
+  &.contains-icon-right {
+    padding-right: $space-scale-8;
+  }
+
+  &.contains-icon-both {
+    padding: $space-scale-8;
+  }
+
+  &.contains-icon-none {
+    padding-left: $space-scale-8 $space-scale-20;
+  }
+}
+
+.bb-chip-blue-lg-default {
+  @include base-lg-chip;
+  color: $color-text-over-background;
+  background-color: $color-global-blue-regular-500;
+
+  /* 
+    Looks like for default blue any icons inside have the same color "icon primary" BUT in component 
+    library and specs there is a color mask
+    TODO: talk to UX about usage of color masks and blend modes (all tokens should be coming from main design tokens)
+  */
+  svg {
+    // fill: $color-icon-primary;
+    fill: $color-global-blue-regular-200;
+  }
+}
+
+.bb-chip-neutral-lg-subtle {
+  @include base-lg-chip;
+  color: $color-icon-primary;
+  /* Looks like this background color has an alpha of 0.1
+    I wouldn't advise this since buttons could have different colors depending on the background 
+    they are placed on top of.
+  */
+  background-color: $color-background-secondary-transparent;
+  svg {
+    fill: $color-icon-primary;
+  }
+}
+
+// Not included in designs (adding to help with Storybook). Hard coding background for times sake
+.bb-chip-neutral-lg-default {
+  @include base-lg-chip;
+  color: $color-text-over-background;
+  background-color: #20415a; // Hardcode only temp for time sake
+  svg {
+    fill: $color-icon-primary;
+  }
+}
+
+.bb-chip-blue-lg-subtle {
+  @include base-lg-chip;
+  color: $color-global-blue-muted-700;
+  background-color: $color-background-informative-transparent;
+
+  /* 
+    Looks like for default blue any icons inside have the same color "icon primary" BUT in component 
+    library and specs there is a color mask
+    TODO: talk to UX about usage of color masks and blend modes (all tokens should be coming from main design tokens)
+  */
+  svg {
+    // fill: $color-icon-primary;
+    fill: $color-global-blue-accent-500;
+  }
+}

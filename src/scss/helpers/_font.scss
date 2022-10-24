@@ -1,0 +1,70 @@
+// Sass doesn't allow variable names to be generated dynamically so this is not very dry unfortunately
+$font-types: (
+  (
+    type: 'label-xl-bold',
+    font-family: $typography-label-xl-bold-font-family,
+    font-weight: $typography-label-xl-bold-font-weight,
+    line-height: $typography-label-xl-bold-line-height,
+    font-size: $typography-label-xl-bold-font-size,
+  ),
+  (
+    type: 'label-xl-regular',
+    font-family: $typography-label-xl-regular-font-family,
+    font-weight: $typography-label-xl-regular-font-weight,
+    line-height: $typography-label-xl-regular-line-height,
+    font-size: $typography-label-xl-regular-font-size,
+  ),
+  (
+    type: 'label-lg-bold',
+    font-family: $typography-label-lg-bold-font-family,
+    font-weight: $typography-label-lg-bold-font-weight,
+    line-height: $typography-label-lg-bold-line-height,
+    font-size: $typography-label-lg-bold-font-size,
+  ),
+  (
+    type: 'label-lg-regular',
+    font-family: $typography-label-lg-regular-font-family,
+    font-weight: $typography-label-lg-regular-font-weight,
+    line-height: $typography-label-lg-regular-line-height,
+    font-size: $typography-label-lg-regular-font-size,
+  ),
+  (
+    type: 'label-md-bold',
+    font-family: $typography-label-md-bold-font-family,
+    font-weight: $typography-label-md-bold-font-weight,
+    line-height: $typography-label-md-bold-line-height,
+    font-size: $typography-label-md-bold-font-size,
+  ),
+  (
+    type: 'label-md-regular',
+    font-family: $typography-label-md-regular-font-family,
+    font-weight: $typography-label-md-regular-font-weight,
+    line-height: $typography-label-md-regular-line-height,
+    font-size: $typography-label-md-regular-font-size,
+  ),
+  (
+    type: 'label-xs-bold',
+    font-family: $typography-label-xs-bold-font-family,
+    font-weight: $typography-label-xs-bold-font-weight,
+    line-height: $typography-label-xs-bold-line-height,
+    font-size: $typography-label-xs-bold-font-size,
+  ),
+  (
+    type: 'label-sm-bold',
+    font-family: $typography-label-sm-bold-font-family,
+    font-weight: $typography-label-sm-bold-font-weight,
+    line-height: $typography-label-sm-bold-line-height,
+    font-size: $typography-label-sm-bold-font-size,
+  )
+);
+
+@mixin font($type) {
+  @each $element in $font-types {
+    @if $type == map-get($element, type) {
+      font-family: map-get($element, font-family);
+      font-weight: map-get($element, font-weight);
+      line-height: map-get($element, line-height);
+      font-size: map-get($element, font-size);
+    }
+  }
+}

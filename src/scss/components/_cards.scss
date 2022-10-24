@@ -1,0 +1,306 @@
+/*
+BLOCK Card
+
+(3 main ELEMENTS)
+  - Header: logo, features
+  - Body: journey start, journey  end
+  - Footer: details, action
+
+(2 main MODIFIERS)
+  - top panel
+  - bottom panel
+
+  Additional notes: 
+  Currently all elements are part of this one card.
+  If things such as "journey" or "footer" (transport type icon, time, passengers)
+  need to be used in different components (not in the card) they could be split out as seperate blocks
+  eg. "bb-journey" or "bb-journey-details"
+*/
+.bb-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 360px;
+  min-height: 202px;
+  border-radius: $border-radius-xl;
+  @include shadow(subtle-md);
+
+  // MODIFIER - top panel
+  // modifiers can have different formats like "has-top-panel" or "contains-multiple-options".
+  // Normally I save this naming for state classes eg. for a menu "is-expanded"
+  &--top-panel {
+    background-color: $color-background-positive;
+    border: 1px solid $color-border-positive;
+
+    .bb-card__inner {
+      border: 0;
+    }
+  }
+
+  &__top-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $space-scale-8 0;
+
+    .bb-card__icon {
+      margin-right: $space-scale-2;
+    }
+  }
+
+  &__top-text {
+    @include font(label-sm-bold);
+    color: $color-global-green-muted-700;
+  }
+
+  // MODIFIER - bottom panel
+  &--bottom-panel {
+    background-color: $color-global-blue-regular-50;
+    border: 1px solid $color-border-informative;
+
+    .bb-card__inner {
+      border: 0;
+      @include shadow(subtle-sm);
+    }
+  }
+
+  &__bottom-panel {
+    display: flex;
+    flex-direction: column;
+
+    .bb-card__icon {
+      margin-right: $space-scale-4;
+    }
+
+    hr {
+      // Instead of figuring out what to reverse since I don't want anything just us "all: unset;"
+      all: unset;
+      border-bottom: 1px solid $color-border-informative-transparent;
+      margin-left: $space-scale-16;
+    }
+  }
+
+  &__bottom-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-scale-8 $space-scale-8 $space-scale-8 $space-scale-20;
+  }
+
+  &__bottom-info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__bottom-text {
+    @include font(label-lg-bold);
+    color: $color-text-primary;
+    margin-right: $space-scale-8;
+  }
+
+  &__inner {
+    background-color: $color-background-primary;
+    border: 1px solid $color-background-secondary-translucent;
+    border-radius: $border-radius-xl;
+  }
+
+  // Card common
+  &__icon {
+    /*
+      There are a number of ways to do icons. Looks like the main BB uses inline SVG with CSS to control fill.
+      Could process them all with iconmoon and make icon font or create some Ligature icons eg. <i class="bb-icon-wifi"></i>
+      If inline SVG we can change color like below.
+      NPM package can combine SVGs from a folder into SVG sprite with <use>, but a bit more limited on CSS control
+      
+      Added width and height here and svg to fill below because looks like Figma clock linked to 32x32 icon SVG
+      Yes could adjust the width and height in SVG markup manually, but if this is missed then icons in this
+      component are not consistant.
+    */
+    width: 24px;
+    height: 24px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: $color-icon-primary;
+    }
+
+    &--divider svg {
+      fill: $color-icon-secondary;
+    }
+
+    &--positive svg {
+      fill: $color-icon-positive;
+    }
+  }
+
+  // Header - logo, features
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-scale-16 $space-scale-16 0 $space-scale-20;
+  }
+
+  &__logo {
+    height: $space-scale-24;
+  }
+
+  &__features {
+    display: flex;
+  }
+
+  &__features-item {
+    /*
+      Assuming if icon doesn't exist in DOM neither does this "features-item" element
+      could put space on the "icon" element using something like ":not(empty)"
+      to remove space if icon element doesn't have SVG inside but logic like that doesn't really need to live in the CSS
+    */
+    margin-left: $space-scale-4;
+  }
+
+  // Body - journey start, divider, journey end
+  &__body {
+    padding: $space-scale-20 $space-scale-12 0 $space-scale-20;
+  }
+
+  &__journey {
+    display: flex;
+  }
+
+  /*
+    From the detailed spec I can see safety margin for journey start 16px right side.
+    For journey end left side 10% margin. Both start and end could have "flex-grow: 1" to take up available space
+    I measured the specs and saw 221px. I tested in very wide format for fluid card and setting "max-width: 221px"
+    would create a large amount of white space on the right side. So I went with below.
+  */
+  &__journey-start {
+    flex-grow: 1;
+    margin-right: $space-scale-16;
+  }
+
+  &__journey-end {
+    flex-grow: 1;
+    margin-left: 10%;
+  }
+
+  &__journey-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__journey-time {
+    @include font(label-xl-bold);
+    color: $color-text-primary;
+  }
+
+  &__journey-date {
+    @include font(label-md-regular);
+    color: $color-text-tertiary;
+    margin-top: $space-scale-2;
+  }
+
+  &__journey-station {
+    /*
+      I didn't see specs for alternate cards when date is under the time. Spacing looks slightly larger for station
+      under the time. I'll use a modifer for the card in "Itinerary mode" showing dates and adjust spacing by eye
+      TODO: speak to UX about spacing
+    */
+    margin-top: $space-scale-4;
+    @include font(label-lg-regular);
+    color: $color-text-secondary;
+  }
+
+  &__journey-city {
+    margin-top: $space-scale-2;
+    @include font(label-xs-bold);
+    // Ideally label data from a JSON translation should already be in correct case, but can also transform here
+    text-transform: uppercase;
+    /*
+      I tend to avoid using EM as it sometimes produces unexpected results since its based on parent elements (if things
+      are dropped into different parent blocks with differing font sizes.
+      Could use REMs due to being base HTML font size / scale for a11y. (eg. set HTML font size to 10px). Then when you want 
+      18px or pt font size you could do 1.8rem (easy to remember).
+      In below case EMs computed is about 0.4px and the "WASHINGTON" looks slightly too tight, 0.06em --> 0.6px looks slightly better
+      TODO: speak to UX about letter spacing standards in design system in PT or PX
+    */
+    letter-spacing: 0.04em;
+    color: $color-text-tertiary;
+  }
+
+  &__journey-map {
+    margin-top: $space-scale-2;
+    @include font(label-md-bold);
+
+    a {
+      text-decoration: none;
+      /*
+        If all text links globally have this color this could be placed in another file with global settings.
+        Could select all <a> and apply, but that could be somewhat inflexible at times. Utility classes could be used
+        with possible prefix eg. "bb-u-text-link". A whole separate file could be made with every token and adding prefix
+        of "bb-u-" (Busbud utility) to enable others to use utility classes for either quick proto or places
+        where a block isn't required
+      */
+      color: $color-text-link;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        // TODO: ask UX about interactive hover and focus state visual changes (focus ring, color change, underline etc)
+      }
+    }
+  }
+
+  // Footer - details, action
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: $space-scale-20;
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+    padding: $space-scale-8 0 $space-scale-16 $space-scale-16;
+  }
+
+  &__details-item {
+    display: flex;
+    align-items: center;
+    // When should I be using "space-inline" vs "space-scale"?
+    margin-right: $space-inline-lg;
+
+    /*
+      A few different ways to handle this.
+        - Have a utility class for margin right add to markup eg. "bb-u-margin-right-xxs"
+        - Since this icon is modified could use BEM modifier up in the common area above 
+          and use "&--details" to create a class like "bb-card__icon--details" to add to the markup
+        - Make the icon 'self aware' by putting ".bb-card__details-item & { spacing here }" this
+          would mean whenever the icon has a parent class of above, it would add extra spacing
+        - Decided to go with below approach to keep everything relating to the details section in the
+          one spot and easier to read/manage
+    */
+    .bb-card__icon {
+      margin-right: $space-inline-xxs;
+    }
+  }
+
+  &__details-label {
+    @include font(label-md-regular);
+    color: $color-text-tertiary;
+  }
+
+  &__action {
+    padding: 0 $space-scale-8 $space-scale-8 0;
+  }
+
+  &__options {
+    padding: $space-scale-8 $space-scale-16 $space-scale-16 0;
+  }
+
+  &__options-text {
+    @include font(label-md-bold);
+    color: $color-text-tertiary;
+  }
+}
